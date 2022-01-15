@@ -9,12 +9,13 @@ import java.time.LocalDateTime;
 @Entity @Getter @Setter
 public class PostDetail {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String createdBy;
     private LocalDateTime createdOn;
 
     @OneToOne
+    //@MapsId
     @JoinColumn(name = "post_id")
     private Post post;
 }

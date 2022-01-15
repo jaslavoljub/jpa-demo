@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity @Getter @Setter
 public class PostComment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String review;
 
