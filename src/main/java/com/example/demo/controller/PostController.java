@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.util.ErrorMessage;
 import com.example.demo.domain.Post;
-import com.example.demo.domain.PostComment;
 import com.example.demo.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.ValidationException;
@@ -19,14 +20,32 @@ public class PostController {
         return postRepository.findAll();
     }
 
+//    //Bez kontrole
+//    @PostMapping("post")
+//    public Post create(@RequestBody Post post){
+//        return postRepository.save(post);
+//    }
+
+    //Sa kontrolom pomocu @ExceptionHandler metode
     @PostMapping("post")
-    public Post create(@RequestBody Post post){
-        return postRepository.save(post);
+    public Post create(@RequestBody Post post) throws ValidationException{
+        if(post.getId() == 0 && post.getTitle() != null)
+            return postRepository.save(post);
+        else throw new ValidationException("Post can not be created!");
     }
 
+
+//    //Bez kontrole
+//    @PutMapping("post")
+//    public Post update(@RequestBody Post post) { return postRepository.save(post); }
+
+    //Sa kontrolom pomocu ResponseEntity
     @PutMapping("post")
-    public Post update(@RequestBody Post post) {
-        return postRepository.save(post);
+    ResponseEntity<Post> update(@RequestBody Post post) {
+        if(postRepository.findById(post.getId()).isPresent())
+            return new ResponseEntity(postRepository.save(post), HttpStatus.OK);
+        else
+            return new ResponseEntity(post, HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("post/{id}")
@@ -34,15 +53,22 @@ public class PostController {
         postRepository.deleteById(id);
     }
 
-    @GetMapping("wrong")
-    public Post somethingIsWrong() throws ValidationException {
-        throw new ValidationException("Something is wrong");
-    }
+//    @GetMapping("wrong")
+//    public Post somethingIsWrong() throws ValidationException {
+//        throw new ValidationException("Something is wrong");
+//    }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ValidationException.class)
-    public String exceptionHandler(ValidationException e) {
-        return e.getMessage();
-    }
+//    //Jednostavan - vraca string
+//    @ExceptionHandler(ValidationException.class)
+//    ResponseEntity<String> exceptionHandler(ValidationException e) {
+//        return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+//    }
 
+//Sada koristi @ControllerAdvice
+//    //Poboljsan - vraca objekat ErrorMessage clase kao JSON
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(ValidationException.class)
+//    public ErrorMessage exceptionHandler(ValidationException e) {
+//        return new ErrorMessage("400", e.getMessage());
+//    }
 }

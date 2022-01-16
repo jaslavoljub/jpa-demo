@@ -13,7 +13,7 @@ public class PostComment {
     private Long id;
     private String review;
 
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToOne
     @JoinColumn(name="post_id")
     private Post post;

@@ -21,9 +21,9 @@ public class Post {
     @ElementCollection
     private List<Address> addresses = new ArrayList<>();
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "post",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<PostComment> postComments = new ArrayList<>();
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "post",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    private List<PostComment> postComments = new ArrayList<>();
 
 
     @ManyToMany
