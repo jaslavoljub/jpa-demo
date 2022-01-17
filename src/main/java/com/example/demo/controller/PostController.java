@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.bind.ValidationException;
+import javax.validation.ValidationException;
 
 @RestController
 public class PostController {
@@ -53,19 +53,20 @@ public class PostController {
         postRepository.deleteById(id);
     }
 
-//    @GetMapping("wrong")
-//    public Post somethingIsWrong() throws ValidationException {
-//        throw new ValidationException("Something is wrong");
-//    }
+    @GetMapping("wrong")
+    public Post somethingIsWrong() throws ValidationException {
+        throw new ValidationException("Something is wrong");
+    }
 
-//    //Jednostavan - vraca string
-//    @ExceptionHandler(ValidationException.class)
-//    ResponseEntity<String> exceptionHandler(ValidationException e) {
-//        return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-//    }
+    //Jednostavan - vraca string
+    //Ovo nam treba za System Tests - testErrorHandlingReturnsBadRequest
+    @ExceptionHandler(ValidationException.class)
+    ResponseEntity<String> exceptionHandler(ValidationException e) {
+        return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
-//Sada koristi @ControllerAdvice
-//    //Poboljsan - vraca objekat ErrorMessage clase kao JSON
+//    //Kada je ovo zakomentarisano koristi @ControllerAdvice klasa ControllerExceptionHandler
+//    //Poboljsan - vraca objekat clase ErrorMessage kao JSON
 //    @ResponseStatus(HttpStatus.BAD_REQUEST)
 //    @ExceptionHandler(ValidationException.class)
 //    public ErrorMessage exceptionHandler(ValidationException e) {

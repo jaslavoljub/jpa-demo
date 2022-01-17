@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.Post;
 import com.example.demo.domain.PostDetail;
 import com.example.demo.repository.PostDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;

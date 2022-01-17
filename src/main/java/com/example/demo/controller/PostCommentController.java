@@ -1,13 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.Post;
 import com.example.demo.domain.PostComment;
 import com.example.demo.repository.PostCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.bind.ValidationException;
 
 @RestController
 public class PostCommentController {

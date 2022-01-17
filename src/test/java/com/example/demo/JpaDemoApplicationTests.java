@@ -1,52 +1,23 @@
 package com.example.demo;
 
-import com.example.demo.domain.Post;
-import com.example.demo.domain.PostComment;
-import com.example.demo.repository.PostRepository;
+import com.example.demo.controller.PostController;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.List;
-
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@SpringBootTest
 class JpaDemoApplicationTests {
 
 	@Autowired
-	private PostRepository postRepository;
-
-	@Autowired
-	private EntityManager entityManager;
-
+	PostController postController;
 
 	@Test
 	void contextLoads() {
-		final Post post=new Post();
-		post.setTitle("Belgrade1");
-		postRepository.save(post);
+		Assert.assertNotNull(postController);
 	}
 
-
-	@Test
-	void contextLoadsEntityManager() {
-		final Post post=new Post();
-		post.setTitle("Belgrade1");
-		entityManager.persist(post);
-	}
-
-	private List<PostComment> addComments(Post post){
-		final List<PostComment> postComments = new ArrayList<>();
-		for(int i = 0; i < 5; i++){
-			PostComment postComment=new PostComment();
-			postComment.setReview("Review "+ i);
-			postComment.setPost(post);
-			postComments.add(postComment);
-		}
-		return postComments;
-	}
 }

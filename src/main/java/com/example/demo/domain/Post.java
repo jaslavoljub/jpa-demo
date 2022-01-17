@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity @Getter @Setter
@@ -34,4 +35,13 @@ public class Post {
 
 //    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private PostDetail postDetail;
+
+
+    public Post() {
+    }
+
+    public Post(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 }
